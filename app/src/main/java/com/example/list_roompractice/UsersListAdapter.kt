@@ -3,11 +3,13 @@ package com.example.list_roompractice
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.list_roompractice.data.User
 import com.example.list_roompractice.databinding.ListItemLayoutBinding
+import com.example.list_roompractice.ui.list.ListFragmentDirections
 
 
 class UsersListAdapter : ListAdapter<User, UsersListAdapter.ViewHolder>(UserDiffCallback()) {
@@ -28,6 +30,11 @@ class UsersListAdapter : ListAdapter<User, UsersListAdapter.ViewHolder>(UserDiff
         holder.binding.userId.text = getItem(position).id.toString()
         holder.binding.userName.text = getItem(position).firstName+" "+getItem(position).lastName
         holder.binding.userAge.text = getItem(position).age.toString()
+
+        holder.binding.itemOfList.setOnClickListener {
+            val action = ListFragmentDirections.actionListFragmentToUpdateFragment(getItem(position))
+            it.findNavController().navigate(action)
+        }
     }
 
     inner class ViewHolder(val binding: ListItemLayoutBinding) :
