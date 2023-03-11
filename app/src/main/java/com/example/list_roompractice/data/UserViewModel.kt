@@ -29,4 +29,16 @@ class UserViewModel(application: Application):AndroidViewModel(application) {
             repository.updateUser(user)
         }
     }
+
+    fun deleteUser(user: User){
+        viewModelScope.launch (Dispatchers.IO){
+            repository.deleteUser(user)
+        }
+    }
+
+    fun deleteAll(){
+        viewModelScope.launch (Dispatchers.IO){
+            repository.deleteAllData()
+        }
+    }
 }
