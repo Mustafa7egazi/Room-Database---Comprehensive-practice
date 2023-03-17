@@ -57,13 +57,43 @@
                 android:minHeight="48dp"
                 tools:ignore="HardcodedText" />
 
+            <TextView
+                android:id="@+id/pickPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="#ACABAB"
+                android:padding="@dimen/_5sdp"
+                android:text="Set your picture"
+                android:textColor="#455A64"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+            <ImageView
+                android:id="@+id/correct"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:src="@drawable/correct_success_tick_svgrepo_com"
+                tools:ignore="ContentDescription" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/addNewUser"
                 android:text="Add"
+                android:enabled="false"
                 android:textAllCaps="false"
                 tools:ignore="HardcodedText"/>
+            <TextView
+                android:id="@+id/hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="@string/hint"/>
 
         </LinearLayout>
 

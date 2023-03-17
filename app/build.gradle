@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.list_roompractice"
-        minSdk 24
+        minSdk 28
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -74,5 +74,9 @@ dependencies {
     //scalable units
     implementation 'com.intuit.ssp:ssp-android:1.1.0'
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
+
+    // helper to manage sizes in Bytes, MB ..etc
+    implementation 'com.jakewharton.byteunits:byteunits:0.9.1'
+
 
 }

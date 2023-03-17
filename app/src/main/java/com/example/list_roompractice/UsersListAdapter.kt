@@ -30,6 +30,7 @@ class UsersListAdapter : ListAdapter<User, UsersListAdapter.ViewHolder>(UserDiff
         holder.binding.userId.text = getItem(position).id.toString()
         holder.binding.userName.text = getItem(position).firstName+" "+getItem(position).lastName
         holder.binding.userAge.text = getItem(position).age.toString()
+        holder.binding.imageView.setImageBitmap(getItem(position).profilePic)
 
         holder.binding.itemOfList.setOnClickListener {
             val action = ListFragmentDirections.actionListFragmentToUpdateFragment(getItem(position))

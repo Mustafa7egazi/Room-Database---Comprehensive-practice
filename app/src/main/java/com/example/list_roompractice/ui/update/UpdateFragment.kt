@@ -74,7 +74,7 @@ class UpdateFragment : Fragment() {
                 val age = binding.ageEtUpdate.text.toString()
                 val userId = args.currentUser.id
                 if (validUserInput(fName, lName, age)) {
-                    val userToBeDeleted: User = User(userId, fName, lName, age.toInt())
+                    val userToBeDeleted: User = User(userId, fName, lName, age.toInt(), args.currentUser.profilePic)
                     viewModel.deleteUser(userToBeDeleted)
                     Toast.makeText(requireContext(), "$fName $lName deleted!", Toast.LENGTH_SHORT)
                         .show()
@@ -103,7 +103,7 @@ class UpdateFragment : Fragment() {
         val lName = binding.lastNameEtUpdate.text.toString()
         val age = binding.ageEtUpdate.text.toString()
         if (validUserInput(fName, lName, age)) {
-            val updatedUser = User(args.currentUser.id, fName, lName, age.toInt())
+            val updatedUser = User(args.currentUser.id, fName, lName, age.toInt(),args.currentUser.profilePic)
             viewModel.updateUser(updatedUser)
             Toast.makeText(requireContext(), "Successfully updated!", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment2)

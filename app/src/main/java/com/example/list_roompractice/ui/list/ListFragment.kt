@@ -21,6 +21,10 @@ class ListFragment : Fragment() {
         ViewModelProvider(this)[UserViewModel::class.java]
     }
 
+    private val adapter by lazy {
+        UsersListAdapter()
+    }
+
     private lateinit var binding:FragmentListBinding
 
     override fun onCreateView(
@@ -50,19 +54,10 @@ class ListFragment : Fragment() {
 
         },viewLifecycleOwner,Lifecycle.State.RESUMED)
 
-        val adapter = UsersListAdapter()
+
         binding.userRecyclerview.adapter = adapter
 
-        viewModel.readAllUsersData.observe(viewLifecycleOwner){
-            if (it.isEmpty()){
-                binding.emptyList.visibility = View.VISIBLE
-            }else{
-                if(binding.emptyList.visibility == View.VISIBLE){
-                    binding.emptyList.visibility = View.GONE
-                }
-                adapter.submitList(it)
-            }
-        }
+        observeOnAllUsersData()
 
 
         binding.addBtn.setOnClickListener {
@@ -72,12 +67,28 @@ class ListFragment : Fragment() {
         return binding.root
     }
 
+    private fun observeOnAllUsersData() {
+        viewModel.readAllUsersData.observe(viewLifecycleOwner){
+            if (it.isEmpty()){
+                binding.emptyList.visibility = View.VISIBLE
+                binding.userRecyclerview.visibility = View.GONE
+            }else{
+                if(binding.emptyList.visibility == View.VISIBLE){
+                    binding.userRecyclerview.visibility = View.VISIBLE
+                    binding.emptyList.visibility = View.GONE
+                }
+                adapter.submitList(it)
+            }
+        }
+    }
+
     private fun clearAllData() {
         val builder = AlertDialog.Builder(requireContext())
         builder.apply {
             setPositiveButton("Yes") { _, _ ->
                 viewModel.deleteAll()
                 Toast.makeText(requireContext(),"All data has gone forever!",Toast.LENGTH_SHORT).show()
+                observeOnAllUsersData()
             }
             setNegativeButton("No",null)
             setTitle("Clear Data")
