@@ -1,5 +1,7 @@
 package com.example.list_roompractice.data
 
+import androidx.lifecycle.LiveData
+
 class UserRepository(private val userDao: UserDao) {
 
 
@@ -19,5 +21,8 @@ class UserRepository(private val userDao: UserDao) {
 
     suspend fun deleteAllData(){
         userDao.deleteAllData()
+    }
+    fun searchInDatabase(searchQuery:String):LiveData<List<User>>{
+        return userDao.searchInDatabase(searchQuery)
     }
 }

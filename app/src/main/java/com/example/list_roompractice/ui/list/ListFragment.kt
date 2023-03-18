@@ -15,7 +15,7 @@ import com.example.list_roompractice.UsersListAdapter
 import com.example.list_roompractice.data.UserViewModel
 import com.example.list_roompractice.databinding.FragmentListBinding
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(), androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
     private val viewModel:UserViewModel by lazy {
         ViewModelProvider(this)[UserViewModel::class.java]
@@ -38,6 +38,11 @@ class ListFragment : Fragment() {
         requireActivity().addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu, menu)
+
+                val search = menu.findItem(R.id.searchAction)
+                val searchView = search.actionView as androidx.appcompat.widget.SearchView
+                searchView.isSubmitButtonEnabled = true
+                searchView.setOnQueryTextListener(this@ListFragment)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -97,5 +102,28 @@ class ListFragment : Fragment() {
                 .show()
         }
 
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+       if (query != null){
+           searchDatabase(query)
+       }
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if (query != null){
+            searchDatabase(query)
+        }
+        return true
+    }
+
+    private fun searchDatabase(query:String){
+        val searchQuery = "%$query%"
+        viewModel.searchAboutUser(searchQuery).observe(viewLifecycleOwner){list->
+            list.let {
+             adapter.submitList(it)
+            }
+        }
     }
 }
